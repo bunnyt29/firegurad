@@ -1,5 +1,5 @@
 export const environment = {
   production: false,
-  apiUrl: '/api',
-  googleMapsApiKey: 'AIzaSyCqGkcbBzXgfWu7xtCLVAI-RR7HM0qroQ8'
+  apiUrl: 'https://fireguard-server-production.up.railway.app/api',
+  googleMapsApiKey: 'AIzaSyCqGkcbBzXgfWu7xtCLVAI-RR7HM0qroQ8',
 };

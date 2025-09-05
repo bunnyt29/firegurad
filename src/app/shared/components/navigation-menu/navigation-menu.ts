@@ -1,32 +1,29 @@
-import {Component, OnInit} from '@angular/core';
-import {RouterLink} from '@angular/router';
-import {AuthService} from '../../../pages/auth/services/auth';
+import { Component, OnInit } from '@angular/core';
+import { RouterLink } from '@angular/router';
+import { AuthService } from '../../../pages/auth/services/auth';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'navigation-menu',
-  imports: [
-    RouterLink
-  ],
+  imports: [RouterLink],
   templateUrl: './navigation-menu.html',
   standalone: true,
-  styleUrl: './navigation-menu.scss'
+  styleUrl: './navigation-menu.scss',
 })
 export class NavigationMenu implements OnInit {
   isLogged: boolean = false;
 
-  constructor(
-    private authService: AuthService
-  ) {}
+  constructor(private authService: AuthService) {}
 
   ngOnInit(): void {
     this.checkAuthentication();
   }
 
-  checkAuthentication() : void {
+  checkAuthentication(): void {
     this.isLogged = this.authService.isAuthenticated();
   }
 
   redirectToGoogle() {
-    window.location.href = '/api/auth/google';
+    window.location.href = `${environment.apiUrl}/auth/google`;
   }
 }
