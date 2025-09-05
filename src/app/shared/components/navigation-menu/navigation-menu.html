@@ -3,7 +3,15 @@
     <img src="/shared/map-icon.svg" alt="карта">
     <span>карта</span>
   </a>
-  <a routerLink="/become-sitter" class="primary-button">Стани доброволец</a>
+  @if(isLogged) {
+    <a routerLink="/become-volunteer" class="primary-button">Стани доброволец</a>
+  }
+  @if(!isLogged) {
+    <a routerLink="/profile/details" class="nav-item">
+      <img src="/shared/map-icon.svg" alt="карта">
+      <span>профил</span>
+    </a>
+  }
   <div class="nav-item">
     <img src="/shared/donate-icon.svg" alt="дари">
     <span>дари</span>

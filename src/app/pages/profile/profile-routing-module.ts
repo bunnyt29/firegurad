@@ -2,16 +2,16 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
-  // {
-  //   path: 'details',
-  //   loadComponent: () =>
-  //     import('./components/google-sign-in/google-sign-in').then((m) => m.GoogleSignIn)
-  // },
-  // {
-  //   path: 'edit',
-  //   loadComponent: () =>
-  //     import('./components/google-sign-in/google-sign-in').then((m) => m.GoogleSignIn)
-  // }
+  {
+    path: 'details',
+    loadComponent: () =>
+      import('./components/details/details').then((m) => m.Details)
+  },
+  {
+    path: 'edit',
+    loadComponent: () =>
+      import('./components/edit/edit').then((m) => m.Edit)
+  }
 ];
 
 @NgModule({

@@ -4,12 +4,12 @@ export const routes: Routes = [
   {
     path: "",
     pathMatch: "full",
-    redirectTo: "welcome"
+    redirectTo: "map"
   },
   {
     path: "map",
     loadComponent: () =>
-      import('./pages/map/map').then((m) => m.Map)
+      import('./pages/map-fires/components/map/map').then((m) => m.Map)
   },
   {
     path: "welcome",
@@ -19,6 +19,10 @@ export const routes: Routes = [
   {
     path: "auth",
     loadChildren: () => import("./pages/auth/auth-module").then((m) => m.AuthModule)
+  },
+  {
+  path: "profile",
+  loadChildren: () => import("./pages/profile/profile-module").then((m) => m.ProfileModule)
   },
   {
     path: "become-volunteer",
