@@ -27,7 +27,7 @@
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="https" android:host="fireguard-server-production.up.railway.app" />
+                <data android:scheme="https" android:host="fireguard-server-production.up.railway.app" android:pathPrefix="/app" />
             </intent-filter>
 
         </activity>

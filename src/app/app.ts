@@ -17,13 +17,15 @@ export class App {
   private hiddenRoutes: string[] = ['/welcome'];
 
   constructor(private router: Router) {
-    this.router.events.subscribe((event) => {
-      if (event instanceof NavigationStart) {
-        this.hideNavbar = this.hiddenRoutes.includes(event.url);
-      }
-    });
+    // this.router.events.subscribe((event) => {
+    //   if (event instanceof NavigationStart) {
+    //     this.hideNavbar = this.hiddenRoutes.includes(event.url);
+    //   }
+    // });
 
     CapacitorApp.addListener('appUrlOpen', (event: URLOpenListenerEvent) => {
+      if (!event.url.includes('/app/')) return;
+
       const path = event.url.split('/app/').pop();
       if (path) {
         this.router.navigateByUrl('/' + path);
