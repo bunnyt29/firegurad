@@ -1,0 +1,8 @@
+{
+  "/api": {
+    "target": "https://fireguard-server-production.up.railway.app/",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  }
+}

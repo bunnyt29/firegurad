@@ -1,0 +1,33 @@
+.welcome-holder {
+  padding: 60px 30px;
+  height: 100vh;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  background-image: url('../../../../public/mobile/welcome-bg.svg');
+  box-sizing: border-box;
+
+  .welcome-top {
+    padding-top: 80px;
+    display: flex;
+    flex-direction: column;
+
+    span {
+      margin-top: 30px;
+      font-size: 20px;
+      text-align: center;
+    }
+  }
+
+  .button-holder {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+
+    a:hover {
+      font-weight: bold;
+    }
+  }
+}

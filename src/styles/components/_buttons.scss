@@ -1,0 +1,21 @@
+button {
+  background-color: transparent;
+  border: none;
+}
+
+.primary-button {
+  padding: 8px 28px;
+  border-radius: 16px;
+  background-color: grey;
+}
+
+.google-button {
+  padding: 15.5px 65.5px;
+  max-width: 300px;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  border-radius: 2px;
+  font-weight: bold;
+}
