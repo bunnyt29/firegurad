@@ -3,6 +3,7 @@ import { NavigationStart, Router, RouterEvent, RouterOutlet } from '@angular/rou
 import { GoogleMapsModule } from '@angular/google-maps';
 import { NavigationMenu } from './shared/components/navigation-menu/navigation-menu';
 import { App as CapacitorApp, URLOpenListenerEvent } from '@capacitor/app';
+import { setupNotifications } from './shared/service/notification.service';
 
 @Component({
   selector: 'app-root',
@@ -17,11 +18,11 @@ export class App {
   private hiddenRoutes: string[] = ['/welcome'];
 
   constructor(private router: Router) {
-    // this.router.events.subscribe((event) => {
-    //   if (event instanceof NavigationStart) {
-    //     this.hideNavbar = this.hiddenRoutes.includes(event.url);
-    //   }
-    // });
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationStart) {
+        this.hideNavbar = this.hiddenRoutes.includes(event.url);
+      }
+    });
 
     CapacitorApp.addListener('appUrlOpen', (event: URLOpenListenerEvent) => {
       if (!event.url.includes('/app/')) return;
@@ -31,5 +32,7 @@ export class App {
         this.router.navigateByUrl('/' + path);
       }
     });
+
+    setupNotifications();
   }
 }

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "321559240992",
+    "project_id": "fireguard-edb05",
+    "storage_bucket": "fireguard-edb05.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:321559240992:android:f575bc15693f7655b43745",
+        "android_client_info": {
+          "package_name": "com.example.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCVPWnF_fgQB9w-0as1qWlrbUgcKk1wBok"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
