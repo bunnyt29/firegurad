@@ -15,7 +15,6 @@ export class NavigationMenu {
 
   constructor(private authService: AuthService, private router: Router) {
     this.isLogged = this.authService.isAuthenticated;
-    console.log(this.isLogged());
   }
 
   get isBecomeVolunteerRoute(): boolean {
@@ -28,6 +27,5 @@ export class NavigationMenu {
 
   logout() {
     this.authService.logout();
-    console.log(this.authService.token());
   }
 }

@@ -1,39 +1,70 @@
 import { PushNotifications } from '@capacitor/push-notifications';
-import { getCurrentLocation } from './gps.service';
 import { environment } from '../../../environments/environment';
+import { EventEmitter, Injectable, OnInit } from '@angular/core';
+import { GPSService, SpherePoint } from './gps.service';
 
-export async function setupNotifications() {
-  let token = '';
+export type NotificationData =
+  | {
+      type: 'fire';
+      fireId: string;
+    }
+  | {
+      type: 'certificate';
+      certificationSuccessful: boolean;
+    };
 
-  await PushNotifications.addListener('registration', (notiToken) => {
-    token = notiToken.value;
+@Injectable({
+  providedIn: 'root',
+})
+export class NotificationService {
+  public readonly token = new Promise<string>(async (resolve) => {
+    try {
+      const handle = await PushNotifications.addListener('registration', (t) => {
+        resolve(t.value);
+        handle.remove();
+      });
+    } catch {}
   });
 
-  await PushNotifications.addListener('pushNotificationActionPerformed', (notification) => {
-    console.log(notification);
-  });
+  public lastClickedNotification: NotificationData | null = null;
 
-  let permStatus = await PushNotifications.checkPermissions();
-
-  if (permStatus.receive === 'prompt') {
-    permStatus = await PushNotifications.requestPermissions();
+  constructor(private gpsService: GPSService) {
+    this.init();
   }
 
-  if (permStatus.receive !== 'granted') {
-    throw new Error('User denied permissions!');
+  private async getPermissions() {
+    try {
+      let permStatus = await PushNotifications.checkPermissions();
+
+      if (permStatus.receive === 'prompt')
+        permStatus = await PushNotifications.requestPermissions();
+
+      return permStatus.receive === 'granted';
+    } catch {
+      return false;
+    }
   }
 
-  await PushNotifications.register();
+  private async init() {
+    const hasPermissions = await this.getPermissions();
+    if (!hasPermissions) return;
 
-  const location = await getCurrentLocation();
+    await PushNotifications.addListener('pushNotificationActionPerformed', (event) => {
+      this.lastClickedNotification = event.notification.data;
+    });
 
-  if (!token) return;
+    await PushNotifications.register();
 
-  await fetch(`${environment.apiUrl}/notifications/subscribe/${token}`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(location),
-  });
+    await this.subscribeToAreaChannel();
+  }
+
+  private async subscribeToAreaChannel() {
+    await fetch(`${environment.apiUrl}/notifications/subscribe/${await this.token}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(await this.gpsService.location),
+    });
+  }
 }
