@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '../../../pages/auth/services/auth';
 import { environment } from '../../../../environments/environment';
@@ -10,17 +10,11 @@ import { environment } from '../../../../environments/environment';
   standalone: true,
   styleUrl: './navigation-menu.scss',
 })
-export class NavigationMenu implements OnInit {
-  isLogged: boolean = false;
+export class NavigationMenu {
+  isLogged: Signal<boolean>;
 
-  constructor(private authService: AuthService) {}
-
-  ngOnInit(): void {
-    this.checkAuthentication();
-  }
-
-  checkAuthentication(): void {
-    this.isLogged = this.authService.isAuthenticated();
+  constructor(private authService: AuthService) {
+    this.isLogged = this.authService.isAuthenticated;
   }
 
   redirectToGoogle() {
