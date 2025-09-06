@@ -1,1 +1,39 @@
-<p>{{ this.route.snapshot.queryParams | json }}</p>
+@if (profile) {
+  <div class="profile-head container">
+    <span>Твоят профил</span>
+  </div>
+
+  <div class="main-info container">
+    <div class="main-info-image">
+      <img [src]="profile.picture" alt="Вашата профилна снимка">
+    </div>
+    <div class="main-info-text">
+      <span class="names">{{ profile.name }}</span>
+      <span class="user-role">
+        {{ profile.isCertified ? 'Сертифициран' : 'Нецертифициран' }}
+      </span>
+    </div>
+  </div>
+
+  <div class="additional-info-holder">
+    <span>Информация</span>
+    <div class="additional-info">
+      <div class="info">
+        <img src="/shared/profile-info-icon.svg">
+        <span>Имейл адрес: {{ profile.email }}</span>
+      </div>
+      <div class="info">
+        <img src="/shared/profile-info-icon.svg">
+        <span>Предишен опит*: {{ profile.experience }}</span>
+      </div>
+      <div class="info">
+        <img src="/shared/profile-info-icon.svg">
+        <span>Телефон: {{ profile.phone }}</span>
+      </div>
+      <div class="info">
+        <img src="/shared/profile-info-icon.svg">
+        <span>Умения: {{ profile.skills }}</span>
+      </div>
+    </div>
+  </div>
+}

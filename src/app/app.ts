@@ -1,8 +1,9 @@
-import { Component, signal } from '@angular/core';
+import {Component, OnInit, signal} from '@angular/core';
 import { NavigationStart, Router, RouterEvent, RouterOutlet } from '@angular/router';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { NavigationMenu } from './shared/components/navigation-menu/navigation-menu';
 import { App as CapacitorApp, URLOpenListenerEvent } from '@capacitor/app';
+import {AuthService} from './pages/auth/services/auth';
 
 @Component({
   selector: 'app-root',
@@ -11,12 +12,12 @@ import { App as CapacitorApp, URLOpenListenerEvent } from '@capacitor/app';
   standalone: true,
   styleUrl: './app.scss',
 })
-export class App {
+export class App implements OnInit{
   protected readonly title = signal('fireguardapp');
   hideNavbar = false;
   private hiddenRoutes: string[] = ['/welcome'];
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private authService: AuthService) {
     // this.router.events.subscribe((event) => {
     //   if (event instanceof NavigationStart) {
     //     this.hideNavbar = this.hiddenRoutes.includes(event.url);
@@ -31,5 +32,9 @@ export class App {
         this.router.navigateByUrl('/' + path);
       }
     });
+  }
+
+  async ngOnInit() {
+    await this.authService.loadToken();
   }
 }
