@@ -15,7 +15,6 @@ export class NavigationMenu {
 
   constructor(private authService: AuthService) {
     this.isLogged = this.authService.isAuthenticated;
-    console.log(this.isLogged());
   }
 
   redirectToGoogle() {
@@ -24,6 +23,5 @@ export class NavigationMenu {
 
   logout() {
     this.authService.logout();
-    console.log(this.authService.token());
   }
 }

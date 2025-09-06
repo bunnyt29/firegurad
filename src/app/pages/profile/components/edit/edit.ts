@@ -1,19 +1,14 @@
-import {ChangeDetectorRef, Component, inject} from '@angular/core';
-import {ActivatedRoute, Router, RouterLink} from '@angular/router';
-import {Profile} from '../../../../shared/models/Profile';
-import {ProfileService} from '../../services/profile';
-import {CookieService} from 'ngx-cookie-service';
-import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {CertificateUpload} from '../certificate-upload/certificate-upload';
+import { ChangeDetectorRef, Component, inject } from '@angular/core';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { Profile } from '../../../../shared/models/Profile';
+import { ProfileService } from '../../services/profile';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { CertificateUpload } from '../certificate-upload/certificate-upload';
 import { AuthService } from '../../../auth/services/auth';
 
 @Component({
   selector: 'app-edit',
-  imports: [
-    RouterLink,
-    ReactiveFormsModule,
-    CertificateUpload
-  ],
+  imports: [RouterLink, ReactiveFormsModule, CertificateUpload],
   templateUrl: './edit.html',
   styleUrl: './edit.scss',
   standalone: true,
@@ -84,16 +79,17 @@ export class Edit {
     private profileSerivce: ProfileService,
     private route: ActivatedRoute,
     private router: Router,
-    private cookieService: CookieService,
     private authService: AuthService,
     private cdr: ChangeDetectorRef
   ) {}
 
   async ngOnInit() {
+    const isFirstLogin = this.route.snapshot.queryParamMap.get('isFirstLogin');
     const accessToken = this.route.snapshot.queryParamMap.get('access_token');
-    if (accessToken != null) {
-      this.authService.saveToken(accessToken);
-    }
+    const userType = this.route.snapshot.queryParamMap.get('type');
+
+    if (accessToken != null && userType != null) this.authService.saveAuth(accessToken, userType);
+    if (isFirstLogin === 'false') this.router.navigateByUrl('/profile/details');
 
     this.profileForm = this.fb.group({
       id: [''],
@@ -103,7 +99,7 @@ export class Edit {
       phone: ['', [Validators.required, Validators.pattern(/^\+?[0-9]{9,15}$/)]],
       experience: [''],
       skills: [''],
-      isCertified: [false]
+      isCertified: [false],
     });
 
     this.fetchData();
@@ -121,7 +117,7 @@ export class Edit {
         phone: res.phone ?? '',
         experience: res.experience ?? '',
         skills: res.skills ?? '',
-        isCertified: !!res.isCertified
+        isCertified: !!res.isCertified,
       });
 
       // lock email against edits but keep the value shown
@@ -141,13 +137,17 @@ export class Edit {
       ...this.profileForm.getRawValue(),
     };
 
-    this.profileSerivce.edit(payload).subscribe(res => {
-      this.router.navigate(["/profile/details"]);
-    })
+    this.profileSerivce.edit(payload).subscribe((res) => {
+      this.router.navigate(['/profile/details']);
+    });
   }
 
-  get name()  { return this.profileForm.get('name'); }
-  get phone() { return this.profileForm.get('phone'); }
+  get name() {
+    return this.profileForm.get('name');
+  }
+  get phone() {
+    return this.profileForm.get('phone');
+  }
 
   onCertificateUploaded(e: { fileName: string }) {
     console.log('Certificate uploaded:', e.fileName);

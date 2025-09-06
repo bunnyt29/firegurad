@@ -1,10 +1,9 @@
 import { Component, OnInit, signal } from '@angular/core';
-import { NavigationStart, Router, RouterEvent, RouterOutlet } from '@angular/router';
+import { NavigationEnd, NavigationStart, Router, RouterEvent, RouterOutlet } from '@angular/router';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { NavigationMenu } from './shared/components/navigation-menu/navigation-menu';
 import { App as CapacitorApp, URLOpenListenerEvent } from '@capacitor/app';
 import { AuthService } from './pages/auth/services/auth';
-import { setupNotifications } from './shared/service/notification.service';
 
 @Component({
   selector: 'app-root',
@@ -15,12 +14,13 @@ import { setupNotifications } from './shared/service/notification.service';
 })
 export class App implements OnInit {
   protected readonly title = signal('fireguardapp');
-  hideNavbar = false;
   private hiddenRoutes: string[] = ['/welcome'];
+
+  hideNavbar = false;
 
   constructor(private router: Router, private authService: AuthService) {
     this.router.events.subscribe((event) => {
-      if (event instanceof NavigationStart) {
+      if (event instanceof NavigationEnd) {
         this.hideNavbar = this.hiddenRoutes.includes(event.url);
       }
     });
@@ -33,11 +33,9 @@ export class App implements OnInit {
         this.router.navigateByUrl('/' + path);
       }
     });
-
-    setupNotifications();
   }
 
   async ngOnInit() {
-    await this.authService.loadSavedToken();
+    await this.authService.loadSaved();
   }
 }

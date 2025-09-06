@@ -1,17 +1,23 @@
-import {AfterViewInit, Component, OnInit, TemplateRef, ViewChild, ViewContainerRef} from '@angular/core';
-import {GoogleMap, MapMarker} from '@angular/google-maps';
-import {MapService} from '../../services/map';
-import {FireAttendanceService} from '../../services/fire-attendance';
+import {
+  AfterViewInit,
+  Component,
+  OnInit,
+  TemplateRef,
+  ViewChild,
+  ViewContainerRef,
+} from '@angular/core';
+import { GoogleMap, MapMarker } from '@angular/google-maps';
+import { MapService } from '../../services/map';
+import { FireAttendanceService } from '../../services/fire-attendance';
+import { GPSService } from '../../../../shared/service/gps.service';
+import { NotificationService } from '../../../../shared/service/notification.service';
 
 @Component({
   selector: 'app-map',
-  imports: [
-    GoogleMap,
-    MapMarker
-  ],
+  imports: [GoogleMap, MapMarker],
   templateUrl: './map.html',
   standalone: true,
-  styleUrl: './map.scss'
+  styleUrl: './map.scss',
 })
 export class Map implements AfterViewInit {
   @ViewChild('gmap', { static: false }) gmap!: GoogleMap;
@@ -26,17 +32,24 @@ export class Map implements AfterViewInit {
   constructor(
     private mapService: MapService,
     private fireAttendanceService: FireAttendanceService,
-    private vcr: ViewContainerRef
+    private vcr: ViewContainerRef,
+    private gpsService: GPSService,
+    private notificationService: NotificationService
   ) {}
 
   async ngAfterViewInit(): Promise<void> {
-    const { AdvancedMarkerElement } =
-      (await google.maps.importLibrary('marker')) as google.maps.MarkerLibrary;
+    const { AdvancedMarkerElement } = (await google.maps.importLibrary(
+      'marker'
+    )) as google.maps.MarkerLibrary;
 
     this.mapService.get().subscribe((res: any) => {
       if (!res?.length) return;
 
       const bounds = new google.maps.LatLngBounds();
+
+      const lastNotification = this.notificationService.lastClickedNotification;
+      const clickedFireId =
+        lastNotification && lastNotification.type === 'fire' && lastNotification.fireId;
 
       res.forEach((item: any) => {
         const position = { lat: item.lat, lng: item.long };
@@ -53,22 +66,36 @@ export class Map implements AfterViewInit {
           map: this.gmap.googleMap!,
           position,
           content: pinSvg,
-          title: `${item.area} • ${item.source}`
+          title: `${item.area} • ${item.source}`,
         });
 
         const view = this.vcr.createEmbeddedView(this.infoTpl, { item, position });
         view.detectChanges();
 
         const host = document.createElement('div');
-        view.rootNodes.forEach(n => host.appendChild(n));
+        view.rootNodes.forEach((n) => host.appendChild(n));
 
         const info = new google.maps.InfoWindow({ content: host });
         marker.addListener('click', () => info.open({ anchor: marker, map: this.gmap.googleMap! }));
+
+        if (item.id === clickedFireId) marker.click();
 
         bounds.extend(position);
       });
 
       this.gmap.googleMap!.fitBounds(bounds, { top: 50, right: 50, bottom: 50, left: 50 });
+
+      this.gpsService.location.then(({ lat, long }) => {
+        const pinElement = document.createElement('div');
+        pinElement.classList.add('your-location-pin');
+
+        new AdvancedMarkerElement({
+          map: this.gmap.googleMap!,
+          position: new google.maps.LatLng(lat, long),
+          content: pinElement,
+          title: 'Your location',
+        });
+      });
     });
   }
 
@@ -87,7 +114,7 @@ export class Map implements AfterViewInit {
       error: (err) => {
         console.error('Error setting attendance', err);
         alert('Неуспешно отбелязване.');
-      }
+      },
     });
   }
 }

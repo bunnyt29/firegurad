@@ -1,40 +1,57 @@
 import { Geolocation } from '@capacitor/geolocation';
 import { environment } from '../../../environments/environment';
+import { Injectable } from '@angular/core';
 
 export interface SpherePoint {
   lat: number;
   long: number;
 }
 
-async function getIpLocation(): Promise<SpherePoint> {
-  const req = await fetch(`${environment.apiUrl}/geocode/me`);
-  return req.json();
-}
+@Injectable({
+  providedIn: 'root',
+})
+export class GPSService {
+  readonly location = this.getCurrentLocation();
 
-export async function getCurrentLocation() {
-  let permStatus = await Geolocation.checkPermissions();
-
-  if (permStatus.location === 'prompt') {
-    permStatus = await Geolocation.requestPermissions({
-      permissions: ['location'],
-    });
-  }
-
-  if (permStatus.location !== 'granted') return getIpLocation();
-
-  for (let i = 0; i < 10; i++) {
+  private async getPermissions() {
     try {
-      const pos = await Geolocation.getCurrentPosition({
-        enableHighAccuracy: true,
-        timeout: 10000,
-      });
+      let permStatus = await Geolocation.checkPermissions();
 
-      return {
-        lat: pos.coords.latitude,
-        long: pos.coords.longitude,
-      };
-    } catch {}
+      if (permStatus.location === 'prompt') {
+        permStatus = await Geolocation.requestPermissions({
+          permissions: ['location'],
+        });
+      }
+
+      return permStatus.location === 'granted';
+    } catch {
+      return false;
+    }
   }
 
-  return getIpLocation();
+  private async getIpLocation(): Promise<SpherePoint> {
+    const req = await fetch(`${environment.apiUrl}/geocode/me`);
+    return req.json();
+  }
+
+  private async getCurrentLocation() {
+    const hasPermissions = await this.getPermissions();
+    if (!hasPermissions) return this.getIpLocation();
+
+    for (let i = 0; i < 10; i++) {
+      try {
+        const pos = await Geolocation.getCurrentPosition({
+          enableHighAccuracy: true,
+          timeout: 10000,
+        });
+
+        return {
+          lat: pos.coords.latitude,
+          long: pos.coords.longitude,
+        };
+      } catch {}
+    }
+
+    return this.getIpLocation();
+  }
 }
