@@ -25,4 +25,10 @@ export class Welcome {
     await Preferences.set({ key: ONBOARD_KEY, value: '1' });
     window.location.href = `${environment.apiUrl}/auth/google`;
   }
+
+  async skip() {
+    await Preferences.set({ key: ONBOARD_KEY, value: '1' });
+    this.router.navigateByUrl('/map');
+  }
+
 }
