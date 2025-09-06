@@ -15,9 +15,15 @@ export class NavigationMenu {
 
   constructor(private authService: AuthService) {
     this.isLogged = this.authService.isAuthenticated;
+    console.log(this.isLogged());
   }
 
   redirectToGoogle() {
     window.location.href = `${environment.apiUrl}/auth/google`;
+  }
+
+  logout() {
+    this.authService.logout();
+    console.log(this.authService.token());
   }
 }
