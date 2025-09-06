@@ -6,7 +6,7 @@ button {
 .primary-button {
   padding: 8px 28px;
   border-radius: 16px;
-  background-color: grey;
+  background-color: var(--primary-color);
 }
 
 .google-button {
@@ -18,4 +18,10 @@ button {
   gap: 16px;
   border-radius: 2px;
   font-weight: bold;
+}
+
+.secondary-button {
+  padding: 8px 28px;
+  border-radius: 16px;
+  background-color: var(--white);
 }

@@ -6,6 +6,7 @@
 body {
   position: relative;
   margin: 0;
+  padding-bottom: 100px;
 }
 
 .container {
@@ -34,7 +35,6 @@ google-map {
 
 //profile
 .profile-holder {
-  padding-top: 50px;
 
   .profile-head {
     margin-top: 50px;
@@ -81,6 +81,26 @@ google-map {
         gap: 10px;
         color: white;
 
+        .label {
+          font-size: 12px;
+          letter-spacing: 0.3px;
+          text-transform: uppercase;
+          opacity: 0.9;
+          color: var(--white);
+        }
+
+        .user-role {
+          align-self: flex-start;
+          padding: 6px 12px;
+          border-radius: 999px;
+          background: rgba(255, 255, 255, 0.15);
+          color: #fff;
+          border: 1px solid rgba(255, 255, 255, 0.25);
+          font-size: 12px;
+          backdrop-filter: blur(4px);
+        }
+
+
         .names {
           font-size: 24px;
           font-weight: bold;
@@ -92,13 +112,64 @@ google-map {
       margin-top: 50px;
 
       .additional-info {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
         .info {
           display: flex;
           flex-direction: column;
           gap: 20px;
+
+          .certificate {
+            color: var(--white);
+          }
+
+          h3, span {
+            color: var(--white);
+          }
+
+          span {
+            font-size: var(--text-sm);
+            line-height: 22px;
+          }
+
+          &-inner {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+          }
         }
       }
     }
   }
 
+  .profile-input,
+  .profile-textarea {
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    background: var(--white);
+    color: var(--black);
+    border-radius: 12px;
+    padding: 12px 14px;
+    outline: none;
+    transition: border-color .2s ease, box-shadow .2s ease, background-color .2s ease;
+    box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+
+    &::placeholder {
+      color: #9aa0a6;
+    }
+
+    &:focus {
+      border-color: var(--black);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+      background: var(--white);
+    }
+
+    &:read-only {
+      background: var(--white);
+      color: #666;
+      cursor: not-allowed;
+    }
+  }
 }

@@ -1,8 +1,19 @@
-.become-volunteer-title-holder {
-  padding: 75px 10px;
-  display: flex;
-  justify-content: center;
-  background: linear-gradient(50deg, var(--secondary-color), var(--primary-color));
-  border-bottom-left-radius: 24px;
-  border-bottom-right-radius: 24px;
+.our-aim-holder {
+  .our-aim {
+    padding: 75px 10px;
+    display: flex;
+    justify-content: center;
+    background: linear-gradient(50deg, var(--secondary-color), var(--primary-color));
+    border-bottom-left-radius: 24px;
+    border-bottom-right-radius: 24px;
+  }
+
+  p {;
+    margin: 10px auto;
+    text-align: center;
+    width: 25ch;
+    line-height: 30px;
+    opacity: 59%;
+  }
 }
+

@@ -6,7 +6,7 @@
 
   /* type scale */
   --text-xs: 0.75em;
-  --text-sm: 1em;
+  --text-sm: 14px;
   --text-md: 1.125em;
   --text-lg: 1.5em;
   --text-xl: 24px;
@@ -16,6 +16,8 @@
 
   /* font weights */
 
+  --medium: 500;
+  --semi-bold: 600;
   --bold: 700;
 }
 
@@ -31,6 +33,10 @@ h1, h2, h3 {
 h2 {
   font-size: var(--text-xl);
   color: var(--white);
+}
+
+a, p, span, label, input, textarea {
+  font-family: var(--font-primary);
 }
 
 @media (min-width:400px) and (max-width:768px) {

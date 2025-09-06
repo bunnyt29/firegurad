@@ -20,4 +20,10 @@ export class ProfileService {
   edit(data:any) {
     return this.http.patch(this.userPath + '/edit', data);
   }
+
+  getCertificate(userId: string) {
+    return this.http.get(`${this.userPath}/certificate/${userId}`, {
+      responseType: 'blob'
+    });
+  }
 }

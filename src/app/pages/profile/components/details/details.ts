@@ -1,19 +1,27 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit, Signal, signal} from '@angular/core';
 import {ProfileService} from '../../services/profile';
 import {Profile} from '../../../../shared/models/Profile';
+import {toSignal} from '@angular/core/rxjs-interop';
+import {catchError, of, tap} from 'rxjs';
+import {RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-details',
-  imports: [],
+  imports: [
+    RouterLink
+  ],
   templateUrl: './details.html',
   standalone: true,
   styleUrl: './details.scss'
 })
-export class Details implements OnInit {
+export class Details {
   profile!: Profile;
 
+  certificateUrl: string | null = null;
+
   constructor(
-    private profileSerivce: ProfileService
+    private profileService: ProfileService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
@@ -21,8 +29,15 @@ export class Details implements OnInit {
   }
 
   fetchData() {
-    this.profileSerivce.get().subscribe(res => {
+    this.profileService.get().subscribe(res => {
       this.profile = res;
+      this.cdr.detectChanges();
+
+      if (this.profile?.id) {
+        this.profileService.getCertificate(this.profile.id).subscribe((blob) => {
+          this.certificateUrl = URL.createObjectURL(blob);
+        });
+      }
     })
   }
 }

@@ -1,1 +1,63 @@
 <google-map #gmap [options]="options" style="height:100vh;width:100vw"></google-map>
+
+<ng-template #infoWindowTpl let-item="item" let-position="position">
+  <div class="iw-card">
+<!--    <div class="iw-flame" aria-hidden="true">-->
+<!--      &lt;!&ndash; flame svg &ndash;&gt;-->
+<!--      <svg viewBox="0 0 64 64" width="38" height="38">-->
+<!--        <path d="M32 4C26 14 18 20 18 32c0 10 6 20 14 24 8-4 14-14 14-24 0-12-8-18-14-28z" fill="#FF6A00"/>-->
+<!--        <path d="M32 20c-4 6-8 10-8 16 0 6 4 12 8 14 4-2 8-8 8-14 0-6-4-10-8-16z" fill="#FFD166"/>-->
+<!--      </svg>-->
+<!--    </div>-->
+
+    <div class="iw-body">
+      <div class="iw-row">
+        <span class="iw-bullet">
+          <img src="/mobile/iw-bullet-icon.svg">
+        </span>
+        <span class="iw-label">Местоположение</span>
+        <span class="iw-value">{{ item.area}}</span>
+      </div>
+
+      <div class="iw-row">
+        <span class="iw-bullet">
+          <img src="/mobile/iw-bullet-icon.svg">
+        </span>
+        <span class="iw-label">Кординати:</span>
+        <span class="iw-value">
+          {{ item.address || (position.lat.toFixed(4) + ', Lng: ' + position.lng.toFixed(4)) }}
+        </span>
+      </div>
+
+      <div class="iw-row">
+        <span class="iw-bullet">
+          <img src="/mobile/iw-bullet-icon.svg">
+        </span>
+        <span class="iw-label">Източник</span>
+        <span class="iw-value" [class.iw-danger]="item.isActive">
+          {{ item.source }}
+        </span>
+      </div>
+
+      <div class="iw-row">
+        <span class="iw-bullet">
+          <img src="/mobile/iw-bullet-icon.svg">
+        </span>
+        <span class="iw-label">Потвърден:</span>
+        <span class="iw-value" [class.iw-danger]="item.isActive">
+          {{ item.isConfirmed ? 'Да' : 'Не' }}
+        </span>
+      </div>
+
+      <div class="iw-row">
+        <span class="iw-bullet">
+          <img src="/mobile/iw-bullet-icon.svg">
+        </span>
+        <span class="iw-label">Брой доброволци:</span>
+        <span class="iw-value">{{ item.volunteersLabel || '—' }}</span>
+      </div>
+
+      <button class="iw-btn" (click)="goTo(item)">Добави ме!</button>
+    </div>
+  </div>
+</ng-template>

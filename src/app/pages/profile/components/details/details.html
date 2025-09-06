@@ -1,8 +1,10 @@
-@if (profile!) {
+@if (profile) {
   <div class="profile-holder container">
     <div class="profile-head">
       <span>Твоят профил</span>
-      <button>РП</button>
+      <a routerLink="/profile/edit">
+        <img src="/shared/edit.png" alt="Редактирай">
+      </a>
     </div>
     <div class="profile-info-box">
       <div class="main-info">
@@ -12,26 +14,43 @@
         <div class="main-info-text">
           <span class="names">{{ profile.name }}</span>
           <span class="user-role">
-  {{ profile.isCertified ? 'Сертифициран' : 'Нецертифициран' }}
-</span>  </div>
+            {{ profile.isCertified ? 'Сертифициран' : 'Несертифициран' }}
+          </span>
+        </div>
       </div>
       <div class="additional-info-holder">
         <div class="additional-info">
           <div class="info">
             <h3>Лична информация</h3>
-            <div>
-              <span>{{profile.email}}</span>
-              <span>{{profile.phone}}</span>
+            <div class="info-inner">
+              <span>Имейл: {{profile.email}}</span>
+              <span>Телефонен номер: {{profile.phone}}</span>
             </div>
           </div>
+          @if(profile.experience)
+          {
+            <div class="info">
+              <h3>Опит</h3>
+              <span>{{profile.experience}}</span>
+            </div>
+          }
+          @if(profile.skills)
+          {
+            <div class="info">
+              <h3>Умения</h3>
+              <span>{{profile.skills}}</span>
+            </div>
+          }
           <div class="info">
-            <h3>Опит</h3>
-            <span>{{profile.experience}}</span>
+            <h3>Сертификати</h3>
+
+            @if (certificateUrl) {
+              <a [href]="certificateUrl" download="certificate.png" class="certificate">certificate.png</a>
+            } @else {
+              <span>Няма качен сертификат</span>
+            }
           </div>
-          <div class="info">
-            <h3>Умения</h3>
-            <span>{{profile.skills}}</span>
-          </div>
+
 <!--          <div class="info">-->
 <!--            <h3>Оборудване</h3>-->
 <!--            <span>{{profile.}}</span>-->
