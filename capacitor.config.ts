@@ -8,6 +8,11 @@ const config: CapacitorConfig = {
     cleartext: true
   }
   // webDir: 'dist/fireguardapp/browser',
+  plugins: {
+    PushNotifications: {
+      presentationOptions: ['badge', 'sound'],
+    },
+  },
 };
 
 export default config;
