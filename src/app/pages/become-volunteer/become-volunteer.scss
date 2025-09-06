@@ -1,4 +1,5 @@
 .our-aim-holder {
+
   .our-aim {
     padding: 75px 10px;
     display: flex;
@@ -17,3 +18,76 @@
   }
 }
 
+.volunteer-activities {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+
+
+  h2 {
+    width: 20ch;
+    padding-bottom: 30px;
+    margin: 0 auto;
+    text-align: center;
+    font-size: var(--text-xl);
+    color: var(--black);
+  }
+
+  .activity {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+
+    &-icon {
+      width: 80px;
+    }
+
+    &-info {
+      text-align: center;
+      width: 20ch;
+      font-size: var(--text-lg);
+    }
+  }
+}
+
+.why-choose-us {
+  margin-top: 100px;
+
+  &-title {
+
+    h2 {
+      margin: 0 auto;
+      text-align: center;
+      width: 20ch;
+      color: var(--black);
+    }
+  }
+
+  $icon-color: #F35B2B;
+
+  .benefits {
+    margin-top: 40px;
+    padding-inline: 60px;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+  }
+
+  .benefits li {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+}
+
+.button-right-holder {
+  position: fixed;
+  right: 16px;
+  bottom: calc(90px + env(safe-area-inset-bottom));
+  left: auto;
+  padding: 0;
+  z-index: 1000;
+}

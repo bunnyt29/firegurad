@@ -1,5 +1,4 @@
 .welcome-holder {
-  padding: 60px 30px;
   height: 100vh;
   display: flex;
   justify-content: space-between;
@@ -20,11 +19,15 @@
   }
 
   .button-holder {
+    padding: 40px 20px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     gap: 15px;
+    background: linear-gradient(50deg, var(--secondary-color), var(--primary-color));
+    border-top-left-radius: 24px;
+    border-top-right-radius: 24px;
 
     a:hover {
       font-weight: bold;

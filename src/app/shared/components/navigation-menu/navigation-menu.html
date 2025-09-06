@@ -3,20 +3,33 @@
     <img src="/shared/map-icon.svg" alt="карта" />
     <span>карта</span>
   </a>
-  @if(!isLogged()) {
-  <a routerLink="/become-volunteer" class="primary-button">Стани доброволец</a>
+
+  @if (!isLogged()) {
+    @if (isBecomeVolunteerRoute) {
+      <a class="primary-button" (click)="redirectToGoogle()">
+        Стани доброволец
+      </a>
+    } @else {
+      <a routerLink="/become-volunteer" class="primary-button">
+        Стани доброволец
+      </a>
+    }
   } @else {
-  <a routerLink="/profile/details" class="nav-item">
-    <img src="/shared/map-icon.svg" alt="карта" />
-    <span>профил</span>
-  </a>
+    <a routerLink="/profile/details" class="nav-item">
+      <img src="/shared/map-icon.svg" alt="карта" />
+      <span>профил</span>
+    </a>
   }
+
   <div class="nav-item">
     <img src="/shared/donate-icon.svg" alt="дари" />
     <span>дари</span>
   </div>
-  <div class="nav-item" (click)="logout()">
-    <img src="/shared/donate-icon.svg" alt="дари" />
-    <span>изход</span>
-  </div>
+
+  @if (isLogged()) {
+    <div class="nav-item" (click)="logout()">
+      <img src="/shared/donate-icon.svg" alt="дари" />
+      <span>изход</span>
+    </div>
+  }
 </nav>
