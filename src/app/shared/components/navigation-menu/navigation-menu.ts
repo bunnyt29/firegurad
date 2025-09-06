@@ -1,5 +1,5 @@
 import { Component, OnInit, Signal } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
 import { AuthService } from '../../../pages/auth/services/auth';
 import { environment } from '../../../../environments/environment';
 
@@ -13,8 +13,12 @@ import { environment } from '../../../../environments/environment';
 export class NavigationMenu {
   isLogged: Signal<boolean>;
 
-  constructor(private authService: AuthService) {
+  constructor(private authService: AuthService, private router: Router) {
     this.isLogged = this.authService.isAuthenticated;
+  }
+
+  get isBecomeVolunteerRoute(): boolean {
+    return this.router.url === '/become-volunteer';
   }
 
   redirectToGoogle() {
