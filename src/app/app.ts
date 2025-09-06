@@ -1,9 +1,9 @@
-import {Component, OnInit, signal} from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { NavigationStart, Router, RouterEvent, RouterOutlet } from '@angular/router';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { NavigationMenu } from './shared/components/navigation-menu/navigation-menu';
 import { App as CapacitorApp, URLOpenListenerEvent } from '@capacitor/app';
-import {AuthService} from './pages/auth/services/auth';
+import { AuthService } from './pages/auth/services/auth';
 import { setupNotifications } from './shared/service/notification.service';
 
 @Component({
@@ -13,7 +13,7 @@ import { setupNotifications } from './shared/service/notification.service';
   standalone: true,
   styleUrl: './app.scss',
 })
-export class App implements OnInit{
+export class App implements OnInit {
   protected readonly title = signal('fireguardapp');
   hideNavbar = false;
   private hiddenRoutes: string[] = ['/welcome'];
@@ -38,6 +38,6 @@ export class App implements OnInit{
   }
 
   async ngOnInit() {
-    await this.authService.loadToken();
+    await this.authService.loadSavedToken();
   }
 }
