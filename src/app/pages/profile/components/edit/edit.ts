@@ -1,12 +1,11 @@
-import { JsonPipe } from '@angular/common';
 import {ChangeDetectorRef, Component, inject} from '@angular/core';
 import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import {Profile} from '../../../../shared/models/Profile';
 import {ProfileService} from '../../services/profile';
-import {Preferences} from '@capacitor/preferences';
 import {CookieService} from 'ngx-cookie-service';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {CertificateUpload} from '../certificate-upload/certificate-upload';
+import { AuthService } from '../../../auth/services/auth';
 
 @Component({
   selector: 'app-edit',
@@ -17,7 +16,7 @@ import {CertificateUpload} from '../certificate-upload/certificate-upload';
   ],
   templateUrl: './edit.html',
   styleUrl: './edit.scss',
-  standalone: true
+  standalone: true,
 })
 export class Edit {
   // profile!: Profile;
@@ -79,7 +78,6 @@ export class Edit {
   // }
   profile!: Profile;
   profileForm!: FormGroup;
-  accessToken!: string | null;
 
   constructor(
     private fb: FormBuilder,
@@ -87,13 +85,14 @@ export class Edit {
     private route: ActivatedRoute,
     private router: Router,
     private cookieService: CookieService,
+    private authService: AuthService,
     private cdr: ChangeDetectorRef
   ) {}
 
   async ngOnInit() {
-    this.accessToken = this.route.snapshot.queryParamMap.get('access_token');
-    if (this.accessToken != null) {
-      this.cookieService.set('auth', this.accessToken, { path: '/' });
+    const accessToken = this.route.snapshot.queryParamMap.get('access_token');
+    if (accessToken != null) {
+      this.authService.saveToken(accessToken);
     }
 
     this.profileForm = this.fb.group({
@@ -111,7 +110,7 @@ export class Edit {
   }
 
   fetchData() {
-    this.profileSerivce.get().subscribe(res => {
+    this.profileSerivce.get().subscribe((res) => {
       this.profile = res;
 
       this.profileForm.patchValue({

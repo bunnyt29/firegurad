@@ -1,57 +1,32 @@
-import { Injectable } from '@angular/core';
-import {CookieService} from 'ngx-cookie-service';
-import {environment} from '../../../../environments/environment';
-import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
-import {Preferences} from '@capacitor/preferences';
+import { computed, Injectable, signal } from '@angular/core';
+import { environment } from '../../../../environments/environment';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { Preferences } from '@capacitor/preferences';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
-  private authPath = environment.apiUrl + "/auth";
-  private cachedToken: string | null = null;
+  public readonly TOKEN_KEY = 'token';
 
-  constructor(
-    private http: HttpClient,
-    private cookieService: CookieService
-  ) { }
+  public readonly token = signal<string | null>(null);
 
-  async saveToken(token: any) {
-    this.cachedToken = token;
-    await Preferences.set({ key: 'token', value: JSON.stringify({ access_token: token }) });
+  public readonly isAuthenticated = computed(() => this.token() != null);
+
+  async loadSavedToken() {
+    const token = await Preferences.get({ key: this.TOKEN_KEY });
+    this.token.set(token.value);
   }
 
-  loadToken() {
-    const token = this.cookieService.get('auth');
-    this.cachedToken = token ? token : null;
+  async saveToken(token: string | null) {
+    this.token.set(token);
+
+    if (token == null) await Preferences.remove({ key: this.TOKEN_KEY });
+    else await Preferences.set({ key: this.TOKEN_KEY, value: token });
   }
 
-  // async loadToken() {
-  //   const ret = await Preferences.get({ key: 'token' });
-  //   if (ret.value) {
-  //     try {
-  //       const parsed = JSON.parse(ret.value);
-  //       this.cachedToken = parsed.access_token ?? null;
-  //     } catch {
-  //       this.cachedToken = null;
-  //     }
-  //   }
-  // }
-
-  // getTokenSync(): string | null {
-  //   return this.cachedToken;
-  // }
-
-  isAuthenticated(): boolean {
-    if (this.cookieService === undefined) {
-      return false;
-    } else {
-      return !!this.cookieService.get('auth');
-    }
-  }
-
-  getToken(): string | null {
-    return this.cookieService.get('auth') || null;
+  logout() {
+    this.saveToken(null);
   }
 }
