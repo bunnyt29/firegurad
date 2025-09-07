@@ -9,8 +9,9 @@
     border-bottom-right-radius: 24px;
   }
 
-  p {;
-    margin: 10px auto;
+  p {
+    margin: 0 auto;
+    padding-block: 50px;
     text-align: center;
     width: 25ch;
     line-height: 30px;
@@ -65,7 +66,19 @@
     }
   }
 
-  $icon-color: #F35B2B;
+  .with-heading-bg {
+    min-height: 250px;
+    background-image: url("/mobile/why-choose-us-heading-bg.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+
+    h2 {
+      margin-top: 50px;
+      color: white;
+    }
+  }
 
   .benefits {
     margin-top: 40px;
@@ -80,11 +93,26 @@
     display: flex;
     align-items: center;
     gap: 7px;
+    font-size: var(--text-lg);
   }
 }
 
 .why-choose-us:last-child {
   margin-bottom: 150px;
+}
+
+.with-bg {
+  min-height: 500px;
+  background-image: url("/mobile/why-choose-us-bg.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  h2, li {
+    color: var(--white);
+  }
 }
 
 .button-right-holder {

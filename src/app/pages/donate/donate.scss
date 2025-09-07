@@ -11,10 +11,60 @@
 }
 
 .donate-content-holder {
-  padding-inline: 38px;
+  margin-bottom: 110px;
 
   .donate-introduction {
     margin-block: 49px 20px;
-    padding-inline: 4px;
+    padding-inline: 42px;
+    text-align: center;
+
+    span {
+      line-height: 30px;
+    }
+  }
+
+  .fundraisers {
+    margin-top: 40px;
+    padding-inline: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+
+    .fundraiser {
+      padding-bottom: 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      background: var(--primary-bg-color);
+      border-radius: 24px;
+
+      &-image-holder {
+        width: 100%;
+
+        img {
+          width: 100%;
+          border-top-right-radius: 24px;
+          border-top-left-radius: 24px;
+        }
+      }
+
+      .fundraiser-title {
+        padding-inline: 10px;
+        width: 25ch;
+        font-size: var(--text-lg);
+        line-height: 30px;
+        text-align: center;
+      }
+
+      .center-button-holder {
+        .donate-button {
+          padding: 10px 72px;
+          border-radius: 10px;
+          background-color: var(--primary-color);
+          color: var(--white);
+        }
+      }
+    }
   }
 }

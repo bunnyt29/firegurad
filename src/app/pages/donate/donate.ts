@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {Fundraiser} from '../../shared/service/fundraiser';
+import {Fundraiser} from '../../shared/models/Fundraiser';
+import {FundraiserService} from '../../shared/service/fundraiser';
+import {toSignal} from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-donate',
@@ -8,21 +10,13 @@ import {Fundraiser} from '../../shared/service/fundraiser';
   standalone: true,
   styleUrl: './donate.scss'
 })
-export class Donate implements OnInit{
-  fundraiser!: Fundraiser;
+export class Donate {
+  fundraisers;
 
-  constructor(
-    private fundraiserService: Fundraiser
-  ) {}
-
-  ngOnInit() {
-    this.fetchData();
-  }
-
-  fetchData(){
-    this.fundraiserService.get().subscribe(res => {
-      this.fundraiser = res;
-      console.log(this.fundraiser)
-    })
+  constructor(private fundraiserService: FundraiserService) {
+    this.fundraisers = toSignal(
+      this.fundraiserService.get(),
+      { initialValue: [] as Fundraiser[] }
+    );
   }
 }

@@ -48,7 +48,14 @@ google-map {
     align-items: center;
 
     span {
-      font-size: 24px;
+      font-family: var(--font-primary);
+      font-size: var(--text-xl);
+    }
+
+    a {
+      img {
+        width: 30px;
+      }
     }
   }
 

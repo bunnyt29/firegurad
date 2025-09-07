@@ -1,62 +1,8 @@
-<!--@if (profile) {-->
-<!--  <div class="profile-holder container">-->
-<!--    <div class="profile-head">-->
-<!--      <span>Редактирай профил</span>-->
-<!--    </div>-->
-<!--    <form [formGroup]="profileForm">-->
-
-
-
-<!--    </form>-->
-<!--    <div class="profile-info-box">-->
-<!--      <div class="main-info">-->
-<!--        <div class="main-info-image">-->
-<!--          <img [src]="profile.picture" alt="Вашата профилна снимка">-->
-<!--        </div>-->
-<!--        <div class="main-info-text">-->
-<!--          <span class="names">{{ profile.name }}</span>-->
-<!--          <input placeholder="Иван Иванов"-->
-<!--                 class="profile-name profile-input"-->
-<!--                 type="text"-->
-<!--                 formControlName="firstName">-->
-<!--          <span class="user-role">-->
-<!--            {{ profile.isCertified ? 'Сертифициран' : 'Нецертифициран' }}-->
-<!--          </span>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--      <div class="additional-info-holder">-->
-<!--        <div class="additional-info">-->
-<!--          <div class="info">-->
-<!--            <h3>Лична информация</h3>-->
-<!--            <div class="info-inner">-->
-<!--              <span>Имейл: {{profile.email}}</span>-->
-<!--              <span>Телефонен номер: {{profile.phone}}</span>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--          @if(profile.experience)-->
-<!--          {-->
-<!--            <div class="info">-->
-<!--              <h3>Опит</h3>-->
-<!--              <span>{{profile.experience}}</span>-->
-<!--            </div>-->
-<!--          }-->
-<!--          @if(profile.skills)-->
-<!--          {-->
-<!--            <div class="info">-->
-<!--              <h3>Умения</h3>-->
-<!--              <span>{{profile.skills}}</span>-->
-<!--            </div>-->
-<!--          }-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </div>-->
-
-<!--}-->
-
-
-
 @if (profile) {
+  <button type="button" class="back-button" (click)="goBack()">
+    <img src="/shared/back.png" alt="Стрелка за връщане назад">
+    Върни се назад
+  </button>
   <div class="profile-holder container" [formGroup]="profileForm">
     <div class="profile-head">
       <span>Редактирай профил</span>
@@ -113,6 +59,18 @@
                       formControlName="skills"
                       rows="7"
                       placeholder="Пример: разхождане, грижа за малки породи, даване на лекарства"></textarea>
+          </div>
+
+          <div class="info">
+            <h3>Сертификат</h3>
+
+            @if (certificateUrl) {
+              <div class="certificate-preview">
+                <a [href]="certificateUrl" target="_blank" rel="noopener">Виж текущ сертификат</a>
+              </div>
+            } @else {
+              <span class="certificate note">Нямаш качен сертификат.</span>
+            }
           </div>
         </div>
       </div>

@@ -5,17 +5,13 @@
   --font-secondary: "Roboto", sans-serif;
 
   /* type scale */
-  --text-xs: 0.75em;
+  --text-xs: 12px;
   --text-sm: 14px;
-  --text-md: 1.125em;
+  --text-md: 16px;
   --text-lg: 18px;
   --text-xl: 24px;
-  --text-xxl: 2.5em;
-  --text-xxxl: 4.5em;
-  --text-xxxxl: 9.375em;
 
   /* font weights */
-
   --medium: 500;
   --semi-bold: 600;
   --bold: 700;
@@ -37,11 +33,4 @@ h2 {
 
 a, p, span, label, input, textarea {
   font-family: var(--font-primary);
-}
-
-@media (min-width:400px) and (max-width:768px) {
-
-  :root {
-    --text-xs: 0.5em;
-  }
 }
