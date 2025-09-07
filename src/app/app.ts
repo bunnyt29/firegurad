@@ -12,13 +12,13 @@ import { AuthService } from './pages/auth/services/auth';
   standalone: true,
   styleUrl: './app.scss',
 })
-export class App implements OnInit {
+export class App {
   protected readonly title = signal('fireguardapp');
   private hiddenRoutes: string[] = ['/welcome', '/profile/edit'];
 
   hideNavbar = false;
 
-  constructor(private router: Router, private authService: AuthService) {
+  constructor(private router: Router) {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.hideNavbar = this.hiddenRoutes.includes(event.url);
@@ -33,9 +33,5 @@ export class App implements OnInit {
         this.router.navigateByUrl('/' + path);
       }
     });
-  }
-
-  async ngOnInit() {
-    await this.authService.loadSaved();
   }
 }

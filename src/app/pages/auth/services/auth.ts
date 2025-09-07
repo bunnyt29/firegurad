@@ -17,6 +17,12 @@ export class AuthService {
   public readonly isFireDepartment = computed(() => this.userType() === 'FIRE_DEPARTMENT');
   public readonly isAuthenticated = computed(() => this.token() != null);
 
+  public initialLoad: Promise<void>;
+
+  constructor() {
+    this.initialLoad = this.loadSaved();
+  }
+
   async loadSaved() {
     const token = await Preferences.get({ key: this.TOKEN_KEY });
     this.token.set(token.value);
