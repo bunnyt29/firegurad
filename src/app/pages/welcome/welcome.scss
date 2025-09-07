@@ -13,7 +13,9 @@
 
     span {
       margin-top: 30px;
+      padding-inline: 30px;
       font-size: 20px;
+      line-height: 25px;
       text-align: center;
     }
   }
@@ -31,6 +33,10 @@
 
     a:hover {
       font-weight: bold;
+    }
+
+    button {
+      width: 100%;
     }
   }
 }

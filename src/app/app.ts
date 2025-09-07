@@ -14,7 +14,7 @@ import { AuthService } from './pages/auth/services/auth';
 })
 export class App implements OnInit {
   protected readonly title = signal('fireguardapp');
-  private hiddenRoutes: string[] = ['/welcome'];
+  private hiddenRoutes: string[] = ['/welcome', '/profile/edit'];
 
   hideNavbar = false;
 

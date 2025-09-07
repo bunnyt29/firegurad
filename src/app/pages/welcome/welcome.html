@@ -5,10 +5,13 @@
   </div>
 
   <div class="button-holder">
-    <button class="google-button" (click)="redirectToGoogle()">
+    <button class="tertiary-button" (click)="redirectToGoogle()">
       <img src="/shared/google-icon.svg" alt="Google icon">
       Продължи с Google
     </button>
-    <a (click)="skip()">Пропусни</a>
+    <button class="tertiary-button" (click)="skip()">
+      Продължи без профил
+    </button>
+<!--    <a (click)="skip()">Пропусни</a>-->
   </div>
 </section>

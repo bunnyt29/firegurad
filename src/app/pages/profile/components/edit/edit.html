@@ -103,7 +103,7 @@
             <h3>Опит</h3>
             <textarea class="profile-textarea"
                       formControlName="experience"
-                      rows="4"
+                      rows="7"
                       placeholder="Опиши твоя опит"></textarea>
           </div>
 
@@ -111,7 +111,7 @@
             <h3>Умения</h3>
             <textarea class="profile-textarea"
                       formControlName="skills"
-                      rows="4"
+                      rows="7"
                       placeholder="Пример: разхождане, грижа за малки породи, даване на лекарства"></textarea>
           </div>
         </div>
@@ -119,7 +119,7 @@
 
       <app-certificate-upload (uploaded)="onCertificateUploaded($event)"></app-certificate-upload>
 
-      <div class="right-button-holder">
+      <div class="center-button-holder">
         <button class="btn secondary-button" (click)="save()">Редактирай</button>
       </div>
     </div>

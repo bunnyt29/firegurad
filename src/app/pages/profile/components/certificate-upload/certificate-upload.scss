@@ -1,3 +1,72 @@
+//.upload-section {
+//  margin-top: 40px;
+//  display: grid;
+//  gap: 16px;
+//
+//  .section-title {
+//    text-align: center;
+//    color: var(--white);
+//    line-height: 1.4;
+//  }
+//}
+//
+//.dropzone {
+//  border: 2px dashed var(--white);
+//  border-radius: 12px;
+//  padding: 18px;
+//  transition: background .15s ease;
+//  &.dragover { background: var(--white); }
+//}
+//.dropzone-inner {
+//  display: grid;
+//  justify-items: center;
+//  gap: 10px;
+//  padding: 18px 10px;
+//}
+//.folder-icon { margin-bottom: 4px; }
+//.title { color: var(--white) }
+//.or { color: var(--white) }
+//
+//.selected {
+//  font-size: 14px;
+//  color: #444;
+//  display: flex; align-items: center; gap: 8px;
+//  .x { border: none; background: transparent; cursor: pointer; font-size: 16px; }
+//}
+//
+//.error { color: #d32f2f; font-size: 14px; }
+//
+//.progress-wrap {
+//  width: 100%;
+//  max-width: 320px;
+//  height: 8px;
+//  background: #eee;
+//  border-radius: 999px;
+//  position: relative;
+//  .progress-bar {
+//    height: 100%;
+//    border-radius: 999px;
+//    background: #f15a24;
+//  }
+//  .progress-label {
+//    position: absolute;
+//    top: -22px; right: 0;
+//    font-size: 12px; color: #666;
+//  }
+//}
+//
+//.save-btn {
+//  width: 100%;
+//  border: none;
+//  border-radius: 12px;
+//  padding: 12px 16px;
+//  background: var(--white);
+//  color: var(--black);
+//  font-weight: 700;
+//  cursor: pointer;
+//  &:disabled { opacity: .5; cursor: not-allowed; }
+//}
+
 .upload-section {
   margin-top: 40px;
   display: grid;
@@ -10,22 +79,11 @@
   }
 }
 
-.dropzone {
-  border: 2px dashed var(--white);
-  border-radius: 12px;
-  padding: 18px;
-  transition: background .15s ease;
-  &.dragover { background: var(--white); }
-}
-.dropzone-inner {
+.picker {
   display: grid;
   justify-items: center;
   gap: 10px;
-  padding: 18px 10px;
 }
-.folder-icon { margin-bottom: 4px; }
-.title { color: var(--white) }
-.or { color: var(--white) }
 
 .selected {
   font-size: 14px;
@@ -40,29 +98,29 @@
   width: 100%;
   max-width: 320px;
   height: 8px;
-  background: #eee;
+  background: var(--white);
   border-radius: 999px;
   position: relative;
   .progress-bar {
     height: 100%;
     border-radius: 999px;
-    background: #f15a24;
+    background: var(--white);
   }
   .progress-label {
     position: absolute;
     top: -22px; right: 0;
-    font-size: 12px; color: #666;
+    font-size: 12px; color: var(--white);
   }
 }
 
-.save-btn {
-  width: 100%;
-  border: none;
-  border-radius: 12px;
-  padding: 12px 16px;
-  background: var(--white);
-  color: var(--black);
-  font-weight: 700;
-  cursor: pointer;
-  &:disabled { opacity: .5; cursor: not-allowed; }
+.upload-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  color: white;
+
+  img {
+    width: 50px;
+  }
 }

@@ -13,7 +13,7 @@ export const routes: Routes = [
   {
     path: 'map',
     loadComponent: () =>
-      import('./pages/map-fires/components/map/map').then((m) => m.Map),
+      import('./pages/map-fires/components/map/map').then((m) => m.FireMapComponent),
     canMatch: [requireWelcomeGuard],
   },
   {
@@ -32,6 +32,12 @@ export const routes: Routes = [
     path: 'become-volunteer',
     loadComponent: () =>
       import('./pages/become-volunteer/become-volunteer').then((m) => m.BecomeVolunteer),
+    canMatch: [requireWelcomeGuard],
+  },
+  {
+    path: 'donate',
+    loadComponent: () =>
+      import('./pages/donate/donate').then((m) => m.Donate),
     canMatch: [requireWelcomeGuard],
   },
 

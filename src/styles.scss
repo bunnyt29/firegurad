@@ -6,7 +6,6 @@
 body {
   position: relative;
   margin: 0;
-  padding-bottom: 100px;
 }
 
 .container {
@@ -32,9 +31,15 @@ google-map {
   width: 100vw !important;
 }
 
+.center-button-holder {
+  display: flex;
+  justify-content: center;
+}
+
 
 //profile
 .profile-holder {
+  margin-bottom: 40px;
 
   .profile-head {
     margin-top: 50px;

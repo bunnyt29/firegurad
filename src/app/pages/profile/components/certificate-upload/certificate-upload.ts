@@ -9,10 +9,93 @@ import { HttpEventType } from '@angular/common/http';
   styleUrl: './certificate-upload.scss'
 })
 export class CertificateUpload {
+  // @Output() uploaded = new EventEmitter<{ fileName: string }>();
+  //
+  // file: File | null = null;
+  // dragOver = signal(false);
+  // progress = signal<number | null>(null);
+  // errorMsg = signal<string | null>(null);
+  //
+  // readonly allowedTypes = ['application/pdf', 'image/png', 'image/jpeg'];
+  // readonly maxSizeBytes = 10 * 1024 * 1024; // 10 MB
+  //
+  // constructor(private uploadService: CertificateUploadService) {}
+  //
+  // onBrowse(input: HTMLInputElement) {
+  //   input.click();
+  // }
+  //
+  // onFileInputChange(evt: Event) {
+  //   const input = evt.target as HTMLInputElement;
+  //   const file = input.files?.[0] ?? null;
+  //   this.setFile(file);
+  // }
+  //
+  // onDragOver(evt: DragEvent) {
+  //   evt.preventDefault();
+  //   this.dragOver.set(true);
+  // }
+  //
+  // onDragLeave() {
+  //   this.dragOver.set(false);
+  // }
+  //
+  // onDrop(evt: DragEvent) {
+  //   evt.preventDefault();
+  //   this.dragOver.set(false);
+  //   const file = evt.dataTransfer?.files?.[0] ?? null;
+  //   this.setFile(file);
+  // }
+  //
+  // removeFile() {
+  //   this.file = null;
+  //   this.progress.set(null);
+  //   this.errorMsg.set(null);
+  // }
+  //
+  // private setFile(file: File | null) {
+  //   this.errorMsg.set(null);
+  //   this.progress.set(null);
+  //
+  //   if (!file) { this.file = null; return; }
+  //
+  //   if (!this.allowedTypes.includes(file.type)) {
+  //     this.errorMsg.set('Разрешени са PDF, JPG, PNG.');
+  //     return;
+  //   }
+  //   if (file.size > this.maxSizeBytes) {
+  //     this.errorMsg.set('Файлът е по-голям от 10MB.');
+  //     return;
+  //   }
+  //   this.file = file;
+  // }
+  //
+  // startUpload() {
+  //   if (!this.file) { return; }
+  //
+  //   this.errorMsg.set(null);
+  //   this.progress.set(0);
+  //
+  //   this.uploadService.upload(this.file).subscribe({
+  //     next: (event) => {
+  //       if (event.type === HttpEventType.UploadProgress) {
+  //         const total = event.total ?? 1;
+  //         this.progress.set(Math.round((event.loaded / total) * 100));
+  //       } else if (event.type === HttpEventType.Response) {
+  //         this.progress.set(100);
+  //         this.uploaded.emit({ fileName: this.file!.name });
+  //       }
+  //     },
+  //     error: (err) => {
+  //       this.errorMsg.set('Качването неуспя. Опитай отново.');
+  //       this.progress.set(null);
+  //       console.error(err);
+  //     }
+  //   });
+  // }
   @Output() uploaded = new EventEmitter<{ fileName: string }>();
 
   file: File | null = null;
-  dragOver = signal(false);
   progress = signal<number | null>(null);
   errorMsg = signal<string | null>(null);
 
@@ -22,56 +105,56 @@ export class CertificateUpload {
   constructor(private uploadService: CertificateUploadService) {}
 
   onBrowse(input: HTMLInputElement) {
+    // Clear the input so picking the same file twice still fires (change) event
+    input.value = '';
     input.click();
   }
 
   onFileInputChange(evt: Event) {
     const input = evt.target as HTMLInputElement;
     const file = input.files?.[0] ?? null;
-    this.setFile(file);
+    this.setFile(file, input);
   }
 
-  onDragOver(evt: DragEvent) {
-    evt.preventDefault();
-    this.dragOver.set(true);
-  }
-
-  onDragLeave() {
-    this.dragOver.set(false);
-  }
-
-  onDrop(evt: DragEvent) {
-    evt.preventDefault();
-    this.dragOver.set(false);
-    const file = evt.dataTransfer?.files?.[0] ?? null;
-    this.setFile(file);
-  }
-
-  removeFile() {
+  removeFile(input?: HTMLInputElement) {
     this.file = null;
     this.progress.set(null);
     this.errorMsg.set(null);
+    if (input) input.value = '';
   }
 
-  private setFile(file: File | null) {
+  /** Set and validate file; auto-start upload if valid */
+  private setFile(file: File | null, input?: HTMLInputElement) {
     this.errorMsg.set(null);
     this.progress.set(null);
 
-    if (!file) { this.file = null; return; }
+    if (!file) {
+      this.file = null;
+      return;
+    }
 
     if (!this.allowedTypes.includes(file.type)) {
+      this.file = null;
       this.errorMsg.set('Разрешени са PDF, JPG, PNG.');
+      if (input) input.value = '';
       return;
     }
+
     if (file.size > this.maxSizeBytes) {
+      this.file = null;
       this.errorMsg.set('Файлът е по-голям от 10MB.');
+      if (input) input.value = '';
       return;
     }
+
     this.file = file;
+
+    // Auto-upload immediately after a valid selection
+    this.startUpload();
   }
 
-  startUpload() {
-    if (!this.file) { return; }
+  private startUpload() {
+    if (!this.file) return;
 
     this.errorMsg.set(null);
     this.progress.set(0);
