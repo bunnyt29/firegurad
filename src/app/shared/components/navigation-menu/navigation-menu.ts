@@ -27,6 +27,6 @@ export class NavigationMenu {
 
   logout() {
     this.authService.logout();
-    location.reload();
+    this.router.navigateByUrl('/map');
   }
 }

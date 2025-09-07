@@ -135,6 +135,6 @@ export class Edit {
   }
 
   goBack() {
-    this.location.back();
+    this.router.navigateByUrl('/profile/details');
   }
 }

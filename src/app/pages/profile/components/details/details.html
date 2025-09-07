@@ -45,7 +45,7 @@
             <h3>Сертификати</h3>
 
             @if (certificateUrl) {
-              <a [href]="certificateUrl" download="certificate.png" class="certificate">certificate.png</a>
+              <a [href]="certificateUrl" download="certificate.png" class="certificate" style="text-decoration: underline;">Свали сертификата си</a>
             } @else {
               <span>Няма качен сертификат</span>
             }

@@ -21,6 +21,10 @@ export class ProfileService {
     return this.http.patch(this.userPath + '/edit', data);
   }
 
+  getCertificateUrl(userId: string) {
+    return `${this.userPath}/certificate/${userId}`;
+  }
+
   getCertificate(userId: string) {
     return this.http.get(`${this.userPath}/certificate/${userId}`, {
       responseType: 'blob'
