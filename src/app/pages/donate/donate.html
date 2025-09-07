@@ -1,8 +1,23 @@
 <div class="title-holder">
   <h2>Дарете</h2>
 </div>
+
 <div class="donate-content-holder">
   <div class="donate-introduction">
-    <span>Помогни там, където е най-нужно  Събираме надеждни кампании на едно място и те насочваме директно към тях. Ние не приемаме дарения, а помагаме да стигнат по-бързо.</span>
+    <span>Помогни там, където е най-нужно Събираме надеждни кампании на едно място и те насочваме директно към тях. Ние не приемаме дарения, а помагаме да стигнат по-бързо.</span>
+  </div>
+
+  <div class="fundraisers">
+    @for (fundraiser of fundraisers(); track fundraiser.id ?? $index) {
+      <div class="fundraiser">
+        <div class="fundraiser-image-holder">
+          <img [src]="fundraiser.imageUrl" alt="" />
+        </div>
+        <span class="fundraiser-title">{{ fundraiser.title }}</span>
+        <div class="center-button-holder">
+          <a [href]="fundraiser.link" target="_blank" rel="noopener" class="donate-button">Дари</a>
+        </div>
+      </div>
+    }
   </div>
 </div>

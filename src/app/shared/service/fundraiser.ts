@@ -6,7 +6,7 @@ import {Observable} from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class Fundraiser {
+export class FundraiserService {
   private fundraiserPath = environment.apiUrl + "/fundraiser"
 
   constructor(

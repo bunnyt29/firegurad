@@ -1,5 +1,24 @@
+.back-button {
+  margin-top: 30px;
+  padding-left: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: var(--text-lg);
+
+  img {
+    width: 20px;
+  }
+}
+
+.profile-head {
+  margin-top: 20px;
+}
+
 .center-button-holder {
   margin-block: 30px;
 }
 
-
+.certificate-preview a {
+  color: var(--white);
+}
