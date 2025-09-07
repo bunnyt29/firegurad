@@ -10,19 +10,20 @@ button {
   color: white;
 }
 
-.google-button {
-  padding: 15.5px 65.5px;
-  max-width: 300px;
-  background-color: white;
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  border-radius: 2px;
-  font-weight: bold;
-}
-
 .secondary-button {
   padding: 8px 28px;
   border-radius: 16px;
   background-color: var(--white);
+}
+
+.tertiary-button {
+  padding: 15.5px 65.5px;
+  max-width: 300px;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  border-radius: 8px;
+  font-weight: bold;
 }

@@ -21,4 +21,8 @@ export class FireAttendanceService {
     const url = `${this.firesPath}/isAttending/${encodeURIComponent(fireId)}`;
     return this.http.post(url, {}); // empty body
   }
+
+  getAttendance(fireId: string): Observable<any> {
+    return this.http.get<any>(`${this.firesPath}/${fireId}`);
+  }
 }

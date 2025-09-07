@@ -1,0 +1,20 @@
+.title-holder {
+  padding: 34px 139px;
+  text-align: center;
+  background: linear-gradient(90deg, var(--secondary-color) 0%, var(--primary-color) 100%);
+
+  h2 {
+    text-transform: uppercase;
+    font-weight: var(--bold);
+    color: var(--black);
+  }
+}
+
+.donate-content-holder {
+  padding-inline: 38px;
+
+  .donate-introduction {
+    margin-block: 49px 20px;
+    padding-inline: 4px;
+  }
+}

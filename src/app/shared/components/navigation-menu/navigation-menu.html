@@ -1,6 +1,6 @@
 <nav>
   <a routerLink="/map" class="nav-item">
-    <img src="/shared/map-icon.svg" alt="карта" />
+    <img src="/shared/map-icon.png" alt="карта" />
     <span>карта</span>
   </a>
 
@@ -16,19 +16,19 @@
     }
   } @else {
     <a routerLink="/profile/details" class="nav-item">
-      <img src="/shared/map-icon.svg" alt="карта" />
+      <img src="/shared/profile.png" alt="карта" />
       <span>профил</span>
     </a>
   }
 
-  <div class="nav-item">
-    <img src="/shared/donate-icon.svg" alt="дари" />
+  <a routerLink="/donate" class="nav-item">
+    <img src="/shared/donate-icon.png" alt="дари" />
     <span>дари</span>
-  </div>
+  </a>
 
   @if (isLogged()) {
     <div class="nav-item" (click)="logout()">
-      <img src="/shared/donate-icon.svg" alt="дари" />
+      <img src="/shared/logout.png" alt="дари" />
       <span>изход</span>
     </div>
   }

@@ -1,56 +1,129 @@
+<!--<div class="upload-section">-->
+<!--  <p class="section-title">-->
+<!--    Добави сертификат за да бъдеш одобрен като квалифициран доброволец от администратор.-->
+<!--  </p>-->
+
+<!--  <div class="dropzone"-->
+<!--       [class.dragover]="dragOver()"-->
+<!--       (dragover)="onDragOver($event)"-->
+<!--       (dragleave)="onDragLeave()"-->
+<!--       (drop)="onDrop($event)">-->
+
+<!--    <div class="dropzone-inner">-->
+<!--      <div class="folder-icon" aria-hidden="true">-->
+<!--        <svg viewBox="0 0 24 24" width="48" height="48">-->
+<!--          <path d="M10 4l2 2h8a2 2 0 012 2v9a3 3 0 01-3 3H5a3 3 0 01-3-3V6a2 2 0 012-2h6z" fill="#FFFFFF"/>-->
+<!--          <circle cx="12" cy="13" r="2" fill="#E6521F"/>-->
+<!--        </svg>-->
+<!--      </div>-->
+
+<!--      <div class="title">Плъзни и пусни файл тук</div>-->
+<!--      <div class="or">или</div>-->
+
+<!--      <input #fileInput type="file"-->
+<!--             accept=".pdf,image/png,image/jpeg"-->
+<!--             (change)="onFileInputChange($event)" hidden>-->
+
+<!--      <button type="button" class="secondary-button" (click)="onBrowse(fileInput)">-->
+<!--        избери файл-->
+<!--      </button>-->
+
+<!--      @if (file) {-->
+<!--        <div class="selected">-->
+<!--          Избран: <strong>{{ file.name }}</strong>-->
+<!--          <button type="button" class="x" (click)="removeFile()">✕</button>-->
+<!--        </div>-->
+<!--      }-->
+
+<!--      @if (errorMsg()) {-->
+<!--        <div class="error">{{ errorMsg() }}</div>-->
+<!--      }-->
+
+<!--      @if (progress() !== null) {-->
+<!--        <div class="progress-wrap">-->
+<!--          <div class="progress-bar" [style.width.%]="progress() ?? 0"></div>-->
+<!--          <div class="progress-label">{{ progress() ?? 0 }}%</div>-->
+<!--        </div>-->
+<!--      }-->
+<!--    </div>-->
+<!--  </div>-->
+
+<!--  <button class="save-btn"-->
+<!--          [disabled]="!file || (progress() !== null && (progress() ?? 0) < 100)"-->
+<!--          (click)="startUpload()">-->
+<!--    Запази-->
+<!--  </button>-->
+<!--</div>-->
+
+
+<!--<div class="upload-section">-->
+<!--  <p class="section-title">-->
+<!--    Добави сертификат, за да бъдеш одобрен като квалифициран доброволец от администратор.-->
+<!--  </p>-->
+
+<!--  <div class="picker">-->
+<!--    <input #fileInput-->
+<!--           type="file"-->
+<!--           accept=".pdf,image/png,image/jpeg"-->
+<!--           (change)="onFileInputChange($event)"-->
+<!--           hidden>-->
+<!--    <button type="button" class="secondary-button" (click)="onBrowse(fileInput)">-->
+<!--      избери файл-->
+<!--    </button>-->
+
+<!--    @if (file) {-->
+<!--      <div class="selected">-->
+<!--        Избран: <strong>{{ file.name }}</strong>-->
+<!--        <button type="button" class="x" (click)="clear()">✕</button>-->
+<!--      </div>-->
+<!--    }-->
+<!--  </div>-->
+
+<!--  @if (errorMsg()) {-->
+<!--    <div class="error">{{ errorMsg() }}</div>-->
+<!--  }-->
+
+<!--  @if (progress() !== null) {-->
+<!--    <div class="progress-wrap">-->
+<!--      <div class="progress-bar" [style.width.%]="progress() ?? 0"></div>-->
+<!--      <div class="progress-label">{{ progress() ?? 0 }}%</div>-->
+<!--    </div>-->
+<!--  }-->
+<!--</div>-->
+
 <div class="upload-section">
   <p class="section-title">
     Добави сертификат за да бъдеш одобрен като квалифициран доброволец от администратор.
   </p>
 
-  <div class="dropzone"
-       [class.dragover]="dragOver()"
-       (dragover)="onDragOver($event)"
-       (dragleave)="onDragLeave()"
-       (drop)="onDrop($event)">
+  <div class="picker">
+    <input #fileInput
+           type="file"
+           accept=".pdf,image/png,image/jpeg"
+           (change)="onFileInputChange($event)"
+           hidden>
 
-    <div class="dropzone-inner">
-      <div class="folder-icon" aria-hidden="true">
-        <svg viewBox="0 0 24 24" width="48" height="48">
-          <path d="M10 4l2 2h8a2 2 0 012 2v9a3 3 0 01-3 3H5a3 3 0 01-3-3V6a2 2 0 012-2h6z" fill="#FFFFFF"/>
-          <circle cx="12" cy="13" r="2" fill="#E6521F"/>
-        </svg>
-      </div>
+    <button type="button" class="upload-button" (click)="onBrowse(fileInput)">
+      <img src="/shared/upload-file.png" alt="">
+      избери файл
+    </button>
 
-      <div class="title">Плъзни и пусни файл тук</div>
-      <div class="or">или</div>
-
-      <input #fileInput type="file"
-             accept=".pdf,image/png,image/jpeg"
-             (change)="onFileInputChange($event)" hidden>
-
-      <button type="button" class="secondary-button" (click)="onBrowse(fileInput)">
-        избери файл
-      </button>
-
-      @if (file) {
-        <div class="selected">
-          Избран: <strong>{{ file.name }}</strong>
-          <button type="button" class="x" (click)="removeFile()">✕</button>
-        </div>
-      }
-
-      @if (errorMsg()) {
-        <div class="error">{{ errorMsg() }}</div>
-      }
-
-      @if (progress() !== null) {
-        <div class="progress-wrap">
-          <div class="progress-bar" [style.width.%]="progress() ?? 0"></div>
-          <div class="progress-label">{{ progress() ?? 0 }}%</div>
-        </div>
-      }
-    </div>
+<!--    @if (file) {-->
+<!--      <div class="selected">-->
+<!--        Избран: <strong>{{ file.name }}</strong>-->
+<!--        <button type="button" class="x" (click)="removeFile(fileInput)">✕</button>-->
+<!--      </div>-->
+<!--    }-->
   </div>
 
-  <button class="save-btn"
-          [disabled]="!file || (progress() !== null && (progress() ?? 0) < 100)"
-          (click)="startUpload()">
-    Запази
-  </button>
+  @if (errorMsg()) {
+    <div class="error">{{ errorMsg() }}</div>
+  }
+
+  @if (progress() !== null) {
+    <div class="progress-wrap">
+      <div class="progress-bar" [style.width.%]="progress() ?? 0"></div>
+      <div class="progress-label">{{ progress() ?? 0 }}%</div>
+    </div>
+  }
 </div>

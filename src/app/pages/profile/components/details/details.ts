@@ -2,7 +2,7 @@ import {ChangeDetectorRef, Component, OnInit, Signal, signal} from '@angular/cor
 import {ProfileService} from '../../services/profile';
 import {Profile} from '../../../../shared/models/Profile';
 import {toSignal} from '@angular/core/rxjs-interop';
-import {catchError, of, tap} from 'rxjs';
+import {catchError, map, of, switchMap, tap} from 'rxjs';
 import {RouterLink} from '@angular/router';
 
 @Component({
@@ -14,10 +14,10 @@ import {RouterLink} from '@angular/router';
   standalone: true,
   styleUrl: './details.scss'
 })
-export class Details {
-  profile!: Profile;
-
+export class Details implements OnInit{
+  profile: any;
   certificateUrl: string | null = null;
+  private certificateUrlObj: string | null = null;
 
   constructor(
     private profileService: ProfileService,
@@ -25,19 +25,40 @@ export class Details {
   ) {}
 
   ngOnInit() {
-    this.fetchData();
+    this.fetchData()
   }
 
   fetchData() {
-    this.profileService.get().subscribe(res => {
-      this.profile = res;
-      this.cdr.detectChanges();
-
-      if (this.profile?.id) {
-        this.profileService.getCertificate(this.profile.id).subscribe((blob) => {
-          this.certificateUrl = URL.createObjectURL(blob);
-        });
+    this.profileService.get().pipe(
+      tap(p => this.profile = p),
+      switchMap(p =>
+        p?.id
+          ? this.profileService.getCertificate(p.id).pipe(
+            map(blob => (blob && blob.size > 0 ? blob : null)),
+            catchError(() => of(null))
+          )
+          : of(null)
+      )
+    ).subscribe(blob => {
+      if (this.certificateUrlObj) {
+        URL.revokeObjectURL(this.certificateUrlObj);
+        this.certificateUrlObj = null;
       }
-    })
+
+      if (blob) {
+        this.certificateUrlObj = URL.createObjectURL(blob);
+        this.certificateUrl = this.certificateUrlObj;
+      } else {
+        this.certificateUrl = null;
+      }
+
+      this.cdr.markForCheck();
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.certificateUrlObj) {
+      URL.revokeObjectURL(this.certificateUrlObj);
+    }
   }
 }
