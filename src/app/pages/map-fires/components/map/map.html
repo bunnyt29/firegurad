@@ -1,5 +1,14 @@
 <google-map #gmap [options]="options" style="height:100vh;width:100vw"></google-map>
 
+<ng-template #addFireTmpl let-addFlame="addFlame">
+  <div class="add-flame-body">
+    <span class="iw-label">Сигнализирайте нов пожар</span>
+    <span class="iw-value">
+      <button class="iw-btn" (click)="addFlame()">Добави пожар</button>
+    </span>
+  </div>
+</ng-template>
+
 <ng-template #infoWindowTpl let-item="item" let-position="position">
   <div class="iw-card">
     <div class="iw-body">
@@ -17,7 +26,7 @@
         </span>
         <span class="iw-label">Координати</span>
         <span class="iw-value">
-          {{ item.address || (position.lat.toFixed(4) + ', Lng: ' + position.lng.toFixed(4)) }}
+          {{ item.address || (position.lat.toFixed(4) + ', ' + position.lng.toFixed(4)) }}
         </span>
       </div>
 
@@ -28,8 +37,8 @@
         <span class="iw-label">Източник</span>
         <span class="iw-value" [class.iw-danger]="item.isActive">
           @switch (item.source) {
-            @case ('FIRE_DEPARTMENT') { пожарна }
-            @case ('NASA_SATELLITE') { НАСА сателит }
+            @case ('FIRE_DEPARTMENT') { Пожарна }
+            @case ('NASA') { НАСА Сателит }
             @default { {{ item.source }} }
           }
         </span>
@@ -47,23 +56,50 @@
 
       <div class="iw-row">
         <span class="iw-bullet">
-          <img src="/mobile/iw-bullet-icon.svg" alt="" />
+          <img src="/mobile/iw-bullet-icon.svg" />
         </span>
-              <span class="iw-label">Доброволци</span>
-              <span class="iw-value">
-          @if (!item.attendanceLoading) {
-            <span class="pill">Сертифицирани: {{ item.certifiedCount ?? 0 }}</span>
-            <span class="pill pill-muted">Несертифицирани: {{ item.notCertifiedCount ?? 0 }}</span>
-            <span class="pill pill-total">Общо: {{ item.volunteersLabel || 0 }}</span>
-          } @else {
-            <span>зарежда…</span>
-          }
+        <span class="iw-label">Нужда от повече доброволци</span>
+        <span class="iw-value">
+          {{ !item.isUnderControl ? 'Да' : 'Не' }}
         </span>
       </div>
 
+      @if (item.isConfirmed) {
+        <div class="iw-row">
+          <span class="iw-bullet">
+            <img src="/mobile/iw-bullet-icon.svg" alt="" />
+          </span>
+                <span class="iw-label">Доброволци</span>
+                <span class="iw-value">
+            @if (!item.attendanceLoading) {
+              <span class="pill">Сертифицирани: {{ item.certifiedCount ?? 0 }}</span>
+              <span class="pill pill-muted">Несертифицирани: {{ item.notCertifiedCount ?? 0 }}</span>
+              <span class="pill pill-total">Общо: {{ item.volunteersLabel || 0 }}</span>
+            } @else {
+              <span>Зарежда…</span>
+            }
+          </span>
+        </div>
+      }
 
-      @if(isLogged()){
-        <button class="iw-btn" (click)="goTo(item)">Добави ме!</button>
+      @if (authService.isFireDepartment()) {
+        @if (!item.isConfirmed) {
+          <button class="iw-btn" (click)="confirmFire(item)">Потвърди пожар</button>
+        }
+        @else if (!item.isUnderControl) {
+          <button class="iw-btn" (click)="setFireIsUnderControl(item)">Откажи екстра доброволци</button>
+        }
+
+        <button class="iw-btn" (click)="removeFire(item)">Премахни пожара</button>
+      }
+
+      @if (isLogged() && !authService.isFireDepartment() && item.isConfirmed) {
+        @if (item.isAttending === true) {
+          <button class="iw-btn" (click)="stopGoingTo(item)">Не мога да отида</button>
+        }
+        @else if (item.isAttending === false && !item.isUnderControl) {
+          <button class="iw-btn" (click)="goTo(item)">Добави ме!</button>
+        }
       }
     </div>
   </div>

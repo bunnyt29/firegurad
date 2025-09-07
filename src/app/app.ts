@@ -18,7 +18,7 @@ export class App {
 
   hideNavbar = false;
 
-  constructor(private router: Router) {
+  constructor(private router: Router, protected authService: AuthService) {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.hideNavbar = this.hiddenRoutes.includes(event.url);

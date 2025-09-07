@@ -17,9 +17,18 @@ export class FireAttendanceService {
     return this.http.get<any>(this.firesPath);
   }
 
+  getIsAttending(fireId: string) {
+    return this.http.get<any>(this.firesPath + '/isAttending/' + fireId);
+  }
+
   setAttendance(fireId: string): Observable<any> {
     const url = `${this.firesPath}/isAttending/${encodeURIComponent(fireId)}`;
     return this.http.post(url, {}); // empty body
+  }
+
+  removeAttendance(fireId: string): Observable<any> {
+    const url = `${this.firesPath}/isAttending/${encodeURIComponent(fireId)}`;
+    return this.http.delete(url, {}); // empty body
   }
 
   getAttendance(fireId: string): Observable<any> {
